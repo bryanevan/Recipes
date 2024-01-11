@@ -1,0 +1,174 @@
+{% load static tailwind_tags %}{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+{% tailwind_css %}
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recipes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+  <link type="text/css" href="{% static 'recipes/css/list_styles.css' %}" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+</head>
+
+<body class="flex bg-auto bgimage">
+  <div class="w-screen h-screen">
+    <!-- navigation -->
+    <nav class="flex mx-16 mt-8 bg-gray-800 border border-gray-500 dark:bg-gray-800">
+      <div class="flex justify-between w-full p-4">
+        <div class="lg:hidden">
+          <button id="menuBtn"
+            class="flex items-center px-3 py-2 text-white border border-blue-700 rounded hover:text-white ">
+            <svg class="w-3 h-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <title>Menu</title>
+              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+            </svg>
+          </button>
+        </div>
+        <ul id="menu"
+          class="flex-row hidden p-4 mt-0 space-x-8 font-medium rounded-lg lg:flex rtl:space-x-reverse dark:bg-gray-900 dark:border-gray-700">
+          <li>
+            <a href="{% url 'recipes_home' %}"
+              class="block p-0 px-3 py-2 text-gray-900 border-0 rounded hover:bg-gray-100 hover:bg-transparent hover:text-blue-700 dark:text-white dark:hover:text-blue-500 dark:hover:bg-transparent">
+              Home</a>
+          </li>
+          <li>
+            <a href="{% url 'about' %}"
+              class="block p-0 px-3 py-2 text-gray-900 border-0 rounded hover:bg-gray-100 hover:bg-transparent hover:text-blue-700 dark:text-white dark:hover:text-blue-500 dark:hover:bg-transparent">
+              About</a>
+          </li>
+          <li>
+            <a href="{% url 'recipes:recipes_list' %}"
+              class="block p-0 px-3 py-2 text-blue-700 rounded dark:text-blue-500">
+              Recipes</a>
+          </li>
+          <li>
+            <a href="{% url 'logout' %}"
+              class="block p-0 px-3 py-2 text-gray-900 border-0 rounded hover:bg-gray-100 hover:bg-transparent hover:text-blue-700 dark:text-white dark:hover:text-blue-500 dark:hover:bg-transparent">
+              Logout</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <script>
+      const menuBtn = document.getElementById('menuBtn');
+      const menu = document.getElementById('menu');
+      menuBtn.addEventListener('click', function () {
+        menu.classList.toggle('hidden');
+      });
+    </script>
+
+    <h1>Recipes</h1>
+    <!-- Search Form -->
+    <div class="flex flex-wrap justify-center mx-16 mb-4 bg-gray-800 border border-gray-500 dark:bg-gray-800">
+      <form action="" method="GET" class="flex-row mt-6 mb-6 text-center text-white">
+        {% csrf_token %}
+        <div class="inline-block mx-5 text-lg form-item">
+          {{ form.Recipe_Name.label_tag }} {{ form.Recipe_Name }}
+        </div>
+        <div class="inline-block mx-5 text-lg">
+          {{ form.Ingredients.label_tag }} {{ form.Ingredients }}
+        </div>
+        <div class="inline-block mx-5 text-lg">
+          {{ form.chart_type.label_tag }} {{ form.chart_type }}
+        </div>
+        <script>
+          document.querySelectorAll('.inline-block select').forEach(function (select) {
+            select.style.color = 'black';
+          });
+        </script>
+        <button type="submit"
+          class="px-2 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-900 focus:outline-none focus:shadow-outline">
+          Search
+        </button>
+        <button type="button" id="clearButton"
+          class="px-2 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-900 focus:outline-none focus:shadow-outline">
+          Clear
+        </button>
+        <a id="clearButton"
+          class="px-2 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-900 focus:outline-none focus:shadow-outline"
+          href="{% url 'recipes:create' %}">
+          Add Recipe
+        </a>
+        {% if form.data.Ingredients %}
+        <a href="{% url 'recipes:export_csv' %}?Recipe_Name={{ form.data.Recipe_Name }}&Ingredients={{ form.data.Ingredients }}"
+          class="px-2 py-2 ml-auto font-bold text-white bg-blue-500 rounded hover:bg-blue-900 focus:outline-none focus:shadow-outline">Export
+          as CSV</a>
+        {% else %}
+        <a href="{% url 'recipes:export_csv' %}?Recipe_Name={{ form.data.Recipe_Name }}"
+          class="px-2 py-2 ml-20 font-bold text-white bg-green-500 rounded hover:bg-green-900 focus:outline-none focus:shadow-outline">Export
+          as CSV</a>
+        {% endif %}
+      </form>
+      <script>
+        document.querySelectorAll('.form-item input').forEach(function (input) {
+          input.style.color = 'black';
+        });
+      </script>
+    </div>
+    <!-- Display the charts -->
+    {% if chart_image %}
+    <div class="flex justify-center chart-container">
+      <img src="data:image/png;base64,{{ chart_image | safe }}" alt="Chart" class="rounded-chart" />
+    </div>
+    {% endif %}
+    <!-- Display the error message -->
+    {% if error_message %}
+    <p class="error-message">{{ error_message }}</p>
+    {% endif %}
+
+    <!-- The list of recipes -->
+    <ul class="recipe-list">
+      {% for recipe in recipes %}
+      <li class="recipe-item">
+        <a href="{{ recipe.get_absolute_url }}">
+          <div class="recipe-image-container">
+            {% if recipe.pic %}
+            <img class="recipe-image" src="{{ recipe.pic.url }}" alt="{{ recipe.title }}" />
+        {% else %}
+            <img class="recipe-image" src="/path/to/default/image.jpg" alt="{{ recipe.title }}" />
+        {% endif %}                        
+        <div class="recipe-title-overlay">{{ recipe.title }}</div>
+          </div>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    <script>
+      $(document).ready(function () {
+        $("#id_Ingredients").select2({
+          placeholder: "Choose ingredients",
+          allowClear: true,
+          multiple: true,
+          width: "200px",
+        });
+      });
+      $("#clearButton").click(function () {
+        // Check if any of the search fields have a value
+        var isSearchMade =
+          $("#id_Recipe_Name").val().trim() !== "" ||
+          $("#id_Ingredients").val().length !== 0 ||
+          $("#id_chart_type").val().trim() !== "";
+
+        if (isSearchMade) {
+          // If a search has been made, reload the page without search parameters
+          window.location.href = "{% url 'recipes:recipes_list' %}";
+        } else {
+          // If no search has been made, just clear the fields
+          $("#id_Recipe_Name").val("");
+          $("#id_Ingredients").val(null).trigger("change"); // Clear select2 field
+          $("#id_chart_type").val("");
+        }
+      });
+    </script>
+  </div>
+</body>
+
+</html>

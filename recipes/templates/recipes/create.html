@@ -1,0 +1,97 @@
+{% load static tailwind_tags %}{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+{% tailwind_css %}
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;700&display=swap"
+        rel="stylesheet" />
+    <link type="text/css" href="{% static 'recipes/css/create.css' %}" rel="stylesheet" />
+    <link type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <title>Recipes Documentation</title>
+</head>
+
+<body class="text-gray-200 bg-gray-950">
+    <div class="w-screen h-screen">
+        <!-- navigation -->
+        <nav class="flex mx-16 mt-8 bg-gray-800 border border-gray-500 dark:bg-gray-800">
+            <div class="flex justify-between w-full p-4">
+                <div class="lg:hidden">
+                    <button id="menuBtn"
+                        class="flex items-center px-3 py-2 text-white border border-blue-700 rounded hover:text-white ">
+                        <svg class="w-3 h-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <title>Menu</title>
+                            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+                        </svg>
+                    </button>
+                </div>
+                <ul id="menu"
+                    class="flex-row hidden p-4 mt-0 space-x-8 font-medium rounded-lg lg:flex rtl:space-x-reverse dark:bg-gray-900 dark:border-gray-700">
+                    <li>
+                        <a href="{% url 'recipes_home' %}"
+                            class="block p-0 px-3 py-2 text-gray-900 border-0 rounded hover:bg-gray-100 hover:bg-transparent hover:text-blue-700 dark:text-white dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:bg-transparent">Home</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'about' %}"
+                            class="block p-0 px-3 py-2 text-gray-900 border-0 rounded hover:bg-gray-100 hover:bg-transparent hover:text-blue-700 dark:text-white dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:bg-transparent">About</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'recipes:recipes_list' %}"
+                            class="block p-0 px-3 py-2 text-gray-900 border-0 rounded hover:bg-gray-100 hover:bg-transparent hover:text-blue-700 dark:text-white dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:bg-transparent">Recipes</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'logout' %}"
+                            class="block p-0 px-3 py-2 text-gray-900 border-0 rounded hover:bg-gray-100 hover:bg-transparent hover:text-blue-700 dark:text-white dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:bg-transparent">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <script>
+            const menuBtn = document.getElementById('menuBtn');
+            const menu = document.getElementById('menu');
+
+            menuBtn.addEventListener('click', function () {
+                menu.classList.toggle('hidden');
+            });
+        </script>
+
+        <div class="grid justify-center mx-auto mt-4">
+            <h1 class="flex flex-row justify-center">Create Recipe</h1>
+            <form action="" method="POST" class="px-8 pt-6 pb-8 mb-4 bg-gray-800 rounded shadow-md form-item"
+                enctype="multipart/form-data">
+                {% csrf_token %}
+                {{create_form.as_p}}
+                <button
+                    class="px-4 py-2 mt-6 text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+                    type="submit">
+                    Create
+                </button>
+            </form>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    document.querySelectorAll('.form-item input').forEach(function (input) {
+                        input.style.color = 'black';
+                    });
+                    var descriptionInput = document.querySelector('textarea[name="description"]');
+                    if (descriptionInput) {
+                        descriptionInput.style.color = 'black';
+                    }
+                    var ingredientsInput = document.querySelector('textarea[name="ingredients"]');
+                    if (ingredientsInput) {
+                        ingredientsInput.style.color = 'black';
+                    }
+                });
+            </script>
+
+        </div>
+
+</body>
+
+</html>

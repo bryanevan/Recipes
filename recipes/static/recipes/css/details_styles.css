@@ -1,0 +1,92 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  text-align: left;
+  background-image: url("/static/recipes/images/recipe-detail-background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* CSS styling for the container */
+.container {
+  max-width: 800px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 12px;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* CSS styling for the image */
+.recipe-image {
+  display: block;
+  width: 400px;
+  height: 265px;
+  object-fit: cover;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* CSS styling for the form */
+form {
+  text-align: center;
+  color: white;
+  margin-bottom: 40px;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.form-item {
+  display: inline-block;
+  margin: 0 20px;
+  padding: 8px;
+  font-size: 16px;
+}
+
+select.form-item {
+  width: 200px;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #000;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+input[type="text"].form-item {
+  width: 200px;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #000;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+button,
+.clear-button,
+.btn {
+  float: right;
+  padding: 10px 20px;
+  font-family: Poppins, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  background-color: rgb(59 130 246);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover,
+.clear-button:hover,
+.btn:hover {
+  background-color: rgb(30 58 138);
+}

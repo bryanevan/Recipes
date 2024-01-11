@@ -1,0 +1,35 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+{% tailwind_css %}
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recipes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+  <link href="{% static 'recipes/css/styles.css' %}" rel="stylesheet" />
+  <script src="{% static 'recipes/js/recipes_home.js' %}"></script>
+</head>
+
+<body>
+  <div class="flex items-center justify-center w-screen h-screen">
+    <h1 class="grid items-center text-center text-9xl">
+      Recipes
+      <div class="text-2xl">
+        <button
+          class="px-4 py-2 mt-10 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+          type="button" onclick="window.location.href='/recipes/'">
+          Go To Recipes
+        </button>
+    </h1>
+  </div>
+  </div>
+</body>
+
+</html>

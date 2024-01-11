@@ -1,0 +1,64 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  {% tailwind_css %}
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'auth/css/styles.css' %}" />
+</head>
+
+<body>
+  <div class="relative flex items-center justify-center w-full h-full">
+    <img src="/static/auth/images/login.jpg" class="absolute object-cover object-center w-full h-full" />
+    <div class="relative w-full max-w-xs">
+      <form class="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md" id="loginForm" method="post"
+        action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="mb-4">
+          <label class="flex items-center justify-center mb-6 text-lg font-bold text-gray-700 border-b" for="username">
+            Login to your account
+          </label>
+          <div class="mb-4">
+            <label class="block mb-2 text-sm font-bold text-gray-700" for="username">
+              Username
+            </label>
+            <input
+              class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              name="username" type="text" placeholder="Username" required />
+          </div>
+          <div class="mb-6">
+            <label class="block mb-2 text-sm font-bold text-gray-700" for="password">
+              Password
+            </label>
+            <input
+              class="w-full px-3 py-2 mb-3 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              name="password" type="password" placeholder="******************" required />
+          </div>
+          <div class="flex items-center justify-between">
+            <button
+              class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+              type="button">
+              Sign In
+            </button>
+            <button
+              class="flex items-center inline-block px-4 py-2 text-sm font-bold text-red-500 align-baseline border border-red-500 rounded hover:text-red-800"
+              onclick="redirectToHomepage()">
+              Cancel
+            </button>
+          </div>
+      </form>
+    </div>
+    <script>
+      function redirectToHomepage() {
+        window.location.href = "/";
+      }
+    </script>
+  </div>
+</body>
+
+</html>
