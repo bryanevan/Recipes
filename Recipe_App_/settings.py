@@ -31,6 +31,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = [
     "https://glacial-refuge-41818-3e015d39f76f.herokuapp.com",
+    "glacial-refuge-41818.herokuapp.com/",
     "https://git.heroku.com/glacial-refuge-41818.git",
     "127.0.0.1",
 ]
